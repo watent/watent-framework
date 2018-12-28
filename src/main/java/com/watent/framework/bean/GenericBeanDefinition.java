@@ -2,6 +2,10 @@ package com.watent.framework.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.List;
+
 /**
  * 通用 BeanDefinition 实现
  *
@@ -21,8 +25,25 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private String destroyMethodName;
 
-    @Override
+    private Constructor<?> constructor;
 
+    private Method factoryMethod;
+
+    private List<?> constructorArgumentValues;
+
+    private List<PropertyValue> propertyValues;
+
+    @Override
+    public List<?> getConstructorArgumentValues() {
+        return constructorArgumentValues;
+    }
+
+    @Override
+    public List<PropertyValue> getPropertyValues() {
+        return propertyValues;
+    }
+
+    @Override
     public Class<?> getBeanClass() {
         return beanClass;
     }
@@ -50,6 +71,26 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public String getDestroyMethodName() {
         return destroyMethodName;
+    }
+
+    @Override
+    public Constructor<?> getConstructor() {
+        return constructor;
+    }
+
+    @Override
+    public void setConstructor(Constructor<?> constructor) {
+        this.constructor = constructor;
+    }
+
+    @Override
+    public Method getFactoryMethod() {
+        return factoryMethod;
+    }
+
+    @Override
+    public void setFactoryMethod(Method factoryMethod) {
+        this.factoryMethod = factoryMethod;
     }
 
     @Override
@@ -86,6 +127,14 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     public void setDestroyMethodName(String destroyMethodName) {
         this.destroyMethodName = destroyMethodName;
+    }
+
+    public void setConstructorArgumentValues(List<?> constructorArgumentValues) {
+        this.constructorArgumentValues = constructorArgumentValues;
+    }
+
+    public void setPropertyValues(List<PropertyValue> propertyValues) {
+        this.propertyValues = propertyValues;
     }
 
     @Override

@@ -5,11 +5,11 @@ package com.watent.framework.bean;
  *
  * @author Dylan
  */
-public class ReferenceBean {
+public class BeanReference {
 
     private String beanName;
 
-    public ReferenceBean(String beanName) {
+    public BeanReference(String beanName) {
         super();
         this.beanName = beanName;
     }

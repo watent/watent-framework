@@ -1,4 +1,4 @@
-package com.watent.test;
+package com.watent.test.v1;
 
 import com.watent.framework.bean.BeanDefinition;
 import com.watent.framework.bean.DefaultBeanFactory;

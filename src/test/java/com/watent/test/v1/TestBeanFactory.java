@@ -1,4 +1,4 @@
-package com.watent.test;
+package com.watent.test.v1;
 
 /**
  * @author Dylan
