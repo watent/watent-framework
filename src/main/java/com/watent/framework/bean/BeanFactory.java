@@ -11,7 +11,11 @@ public interface BeanFactory {
      * @param beanName bean name
      * @return Bean Instance
      */
-    Object getBean(String beanName) throws Exception;
+    Object getBean(String beanName) throws Throwable;
 
+    /**
+     * 注册
+     */
+    void registerBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 
 }

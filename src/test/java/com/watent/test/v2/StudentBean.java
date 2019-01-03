@@ -11,8 +11,17 @@ public class StudentBean extends UserBean {
         super(name);
     }
 
-    public StudentBean(BookBean book) {
-        super("none");
+    public StudentBean(String name, BookBean book) {
+        super(name);
         this.book = book;
     }
+
+    public void doReading() {
+        System.out.println(System.currentTimeMillis() + " " + super.getName() + " book.name=" + this.book.getName());
+    }
+
+    public void speakEnglish() {
+        System.out.println("Speak English Hello ！");
+    }
+
 }

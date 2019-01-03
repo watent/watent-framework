@@ -53,7 +53,8 @@ public interface BeanDefinition {
 
     String getDestroyMethodName();
 
-    //constructor factoryMethod 缓存起来 供BeanFactory调用
+    // ------------ bf ----------------
+    //constructor factoryMethod constructorArgumentRealValues 缓存起来 供BeanFactory调用
     Constructor<?> getConstructor();
 
     void setConstructor(Constructor<?> constructor);
@@ -61,6 +62,15 @@ public interface BeanDefinition {
     Method getFactoryMethod();
 
     void setFactoryMethod(Method factoryMethod);
+
+    /**
+     * 构造参数定义 真实类型值
+     */
+    Object[] getConstructorArgumentRealValues();
+
+    void setConstructorArgumentRealValues(Object[] values);
+
+    // --------------- bf -------------
 
     /**
      * 是否单例

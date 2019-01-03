@@ -33,9 +33,24 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private List<PropertyValue> propertyValues;
 
+    /**
+     * 原型实例共享 保证线程安全性
+     */
+    private ThreadLocal<Object[]> realConstructorArgumentValues = new ThreadLocal<>();
+
     @Override
     public List<?> getConstructorArgumentValues() {
         return constructorArgumentValues;
+    }
+
+    @Override
+    public Object[] getConstructorArgumentRealValues() {
+        return realConstructorArgumentValues.get();
+    }
+
+    @Override
+    public void setConstructorArgumentRealValues(Object[] values) {
+        realConstructorArgumentValues.set(values);
     }
 
     @Override

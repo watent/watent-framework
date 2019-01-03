@@ -25,7 +25,7 @@ public class PreBuildBeanFactory extends DefaultBeanFactory {
         }
     }
 
-    public void preInstantiateSingletons() throws Exception {
+    public void preInstantiateSingletons() throws Throwable {
 
         synchronized (beanNames) {
             for (String beanName : beanNames) {

@@ -56,7 +56,7 @@ public class DefaultBeanFactoryTest {
     }
 
     @AfterClass
-    public static void init() throws Exception {
+    public static void init() throws Throwable {
 
         System.out.println("构造方法方式------------");
         for (int i = 0; i < 3; i++) {

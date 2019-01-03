@@ -1,5 +1,6 @@
 package com.watent.framework.bean;
 
+import com.watent.framework.BeanFactoryAware;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,6 +29,8 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
 
     private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
 
+    private List<BeanPostProcessor> beanPostProcessors = Collections.synchronizedList(new LinkedList<>());
+
     /**
      * 记录正在构建的Bean 解决循环依赖
      * doGetBean 递归调用 都会记录在 buildingBeans
@@ -35,11 +38,19 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
     private ThreadLocal<Set<String>> buildingBeans = new ThreadLocal<>();
 
     @Override
-    public Object getBean(String beanName) throws Exception {
+    public Object getBean(String beanName) throws Throwable {
         return doGetBean(beanName);
     }
 
-    protected Object doGetBean(String beanName) throws Exception {
+    @Override
+    public void registerBeanPostProcessor(BeanPostProcessor bpp) {
+        beanPostProcessors.add(bpp);
+        if (bpp instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bpp).setBeanFactory(this);
+        }
+    }
+
+    protected Object doGetBean(String beanName) throws Throwable {
 
         Objects.requireNonNull(beanName, "beanName不能为空");
         Object bean = beanMap.get(beanName);
@@ -82,7 +93,13 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         //属性依赖
         this.setPropertyDIValues(beanDefinition, bean);
 
+        // 应用bean初始化前的处理
+        bean = this.applyPostProcessBeforeInitialization(bean, beanName);
+
         doInit(beanDefinition, bean);
+
+        // 应用bean初始化后的处理
+        bean = this.applyPostProcessAfterInitialization(bean, beanName);
 
         if (beanDefinition.isSingleton()) {
             beanMap.put(beanName, bean);
@@ -91,7 +108,23 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         return bean;
     }
 
-    private void setPropertyDIValues(BeanDefinition bd, Object instance) throws Exception {
+    // 应用bean初始化前的处理
+    private Object applyPostProcessBeforeInitialization(Object bean, String beanName) throws Throwable {
+        for (BeanPostProcessor bpp : this.beanPostProcessors) {
+            bean = bpp.postProcessBeforeInitialization(bean, beanName);
+        }
+        return bean;
+    }
+
+    // 应用bean初始化后的处理
+    private Object applyPostProcessAfterInitialization(Object bean, String beanName) throws Throwable {
+        for (BeanPostProcessor bpp : this.beanPostProcessors) {
+            bean = bpp.postProcessAfterInitialization(bean, beanName);
+        }
+        return bean;
+    }
+
+    private void setPropertyDIValues(BeanDefinition bd, Object instance) throws Throwable {
 
         List<PropertyValue> propertyValues = bd.getPropertyValues();
         if (CollectionUtils.isEmpty(propertyValues)) {
@@ -135,26 +168,29 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         method.invoke(instance);
     }
 
-    private Object createInstanceByConstructor(BeanDefinition bd) throws Exception {
+    private Object createInstanceByConstructor(BeanDefinition bd) throws Throwable {
 
         try {
             Object[] args = getConstructorArgumentValues(bd);
             if (null == args) {
                 return bd.getBeanClass().newInstance();
             }
-            return determineConstructor(bd, args).newInstance(args);
+            bd.setConstructorArgumentRealValues(args);
+            Constructor<?> constructor = determineConstructor(bd, args);
+            bd.setConstructor(constructor);
+            return constructor.newInstance(args);
         } catch (Exception e) {
             logger.error("创建bean的实例异常,beanDefinition：" + bd, e);
             throw e;
         }
     }
 
-    private Object[] getConstructorArgumentValues(BeanDefinition bd) throws Exception {
+    private Object[] getConstructorArgumentValues(BeanDefinition bd) throws Throwable {
 
         return getRealValues(bd.getConstructorArgumentValues());
     }
 
-    private Object[] getRealValues(List<?> args) throws Exception {
+    private Object[] getRealValues(List<?> args) throws Throwable {
 
         if (CollectionUtils.isEmpty(args)) {
             return null;
@@ -239,14 +275,13 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         throw new Exception("不存在对应的构造方法！" + bd);
     }
 
-    private Object createInstanceByStaticFactory(BeanDefinition bd) throws Exception {
+    private Object createInstanceByStaticFactory(BeanDefinition bd) throws Throwable {
 
         Class<?> type = bd.getBeanClass();
         Object[] realValues = getRealValues(bd.getConstructorArgumentValues());
         Method factoryMethod = determineFactoryMethod(bd, realValues, type);
         return factoryMethod.invoke(type, realValues);
     }
-
 
     private Method determineFactoryMethod(BeanDefinition bd, Object[] args, Class<?> type) throws NoSuchMethodException {
 
@@ -304,7 +339,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         throw new NoSuchMethodException("No such factoryMethod");
     }
 
-    private Object createInstanceByFactory(BeanDefinition bd) throws Exception {
+    private Object createInstanceByFactory(BeanDefinition bd) throws Throwable {
 
         Object factoryBean = this.doGetBean(bd.getFactoryBeanName());
         Object[] realArgs = this.getRealValues(bd.getConstructorArgumentValues());

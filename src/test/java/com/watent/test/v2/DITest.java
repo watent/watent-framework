@@ -16,7 +16,7 @@ public class DITest {
     static PreBuildBeanFactory bf = new PreBuildBeanFactory();
 
     @Test
-    public void ConstructorTest() throws Exception {
+    public void ConstructorTest() throws Throwable {
 
         GenericBeanDefinition bd = new GenericBeanDefinition();
         bd.setBeanClass(BookBean.class);
@@ -36,7 +36,7 @@ public class DITest {
         bf.preInstantiateSingletons();
 
         BookBean bookBean = (BookBean) bf.getBean("bookBean");
-        bookBean.doSomething();
+//        bookBean.doSomething();
     }
 
     @Test
@@ -61,7 +61,7 @@ public class DITest {
         bf.preInstantiateSingletons();
 
         BookBean bookBean = (BookBean) bf.getBean("bookBean02");
-        bookBean.doSomething();
+//        bookBean.doSomething();
     }
 
     @Test
@@ -84,7 +84,7 @@ public class DITest {
 
         BookBean bookBean = (BookBean) bf.getBean("bookBean03");
 
-        bookBean.doSomething();
+//        bookBean.doSomething();
     }
 
     @Test
@@ -107,6 +107,6 @@ public class DITest {
         bf.preInstantiateSingletons();
 
         BookBean bookBean = (BookBean) bf.getBean("bookBean04");
-        bookBean.doSomething();
+//        bookBean.doSomething();
     }
 }
