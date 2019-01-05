@@ -1,6 +1,6 @@
 package com.watent.test.v3.aop;
 
-import com.watent.framework.aop.BeforeAdvice;
+import com.watent.framework.aop.advice.BeforeAdvice;
 
 import java.lang.reflect.Method;
 

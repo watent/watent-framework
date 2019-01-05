@@ -1,6 +1,6 @@
 package com.watent.framework.bean;
 
-import com.watent.framework.BeanFactoryAware;
+import com.watent.framework.aop.BeanFactoryAware;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

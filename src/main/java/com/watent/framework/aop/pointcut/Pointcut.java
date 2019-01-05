@@ -1,4 +1,4 @@
-package com.watent.framework.pointcut;
+package com.watent.framework.aop.pointcut;
 
 import java.lang.reflect.Method;
 

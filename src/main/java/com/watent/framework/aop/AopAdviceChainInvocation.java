@@ -1,8 +1,8 @@
-package com.watent.framework;
+package com.watent.framework.aop;
 
-import com.watent.framework.aop.AfterAdvice;
-import com.watent.framework.aop.AroundAdvice;
-import com.watent.framework.aop.BeforeAdvice;
+import com.watent.framework.aop.advice.AfterAdvice;
+import com.watent.framework.aop.advice.AroundAdvice;
+import com.watent.framework.aop.advice.BeforeAdvice;
 
 import java.lang.reflect.Method;
 import java.util.List;

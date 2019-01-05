@@ -1,4 +1,4 @@
-package com.watent.framework.aop;
+package com.watent.framework.aop.advice;
 
 import java.lang.reflect.Method;
 

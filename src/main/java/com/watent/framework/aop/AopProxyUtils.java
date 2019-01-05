@@ -1,7 +1,7 @@
-package com.watent.framework;
+package com.watent.framework.aop;
 
-import com.watent.framework.advisor.Advisor;
-import com.watent.framework.advisor.PointcutAdvisor;
+import com.watent.framework.aop.advisor.Advisor;
+import com.watent.framework.aop.advisor.PointcutAdvisor;
 import com.watent.framework.bean.BeanFactory;
 import org.apache.commons.collections4.CollectionUtils;
 

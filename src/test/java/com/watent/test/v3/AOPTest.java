@@ -1,7 +1,7 @@
 package com.watent.test.v3;
 
-import com.watent.framework.AdvisorAutoProxyCreator;
-import com.watent.framework.advisor.AspectJPointcutAdvisor;
+import com.watent.framework.aop.AdvisorAutoProxyCreator;
+import com.watent.framework.aop.advisor.AspectJPointcutAdvisor;
 import com.watent.framework.bean.BeanReference;
 import com.watent.framework.bean.GenericBeanDefinition;
 import com.watent.framework.bean.PreBuildBeanFactory;

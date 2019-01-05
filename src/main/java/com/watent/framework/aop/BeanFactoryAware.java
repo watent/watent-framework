@@ -1,4 +1,4 @@
-package com.watent.framework;
+package com.watent.framework.aop;
 
 import com.watent.framework.bean.BeanFactory;
 

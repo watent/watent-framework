@@ -1,7 +1,7 @@
-package com.watent.framework.advisor;
+package com.watent.framework.aop.advisor;
 
-import com.watent.framework.pointcut.AspectJExpressionPointcut;
-import com.watent.framework.pointcut.Pointcut;
+import com.watent.framework.aop.pointcut.AspectJExpressionPointcut;
+import com.watent.framework.aop.pointcut.Pointcut;
 
 /**
  * AspectJ 类型切点通知实现

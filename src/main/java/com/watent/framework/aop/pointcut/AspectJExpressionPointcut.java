@@ -1,4 +1,4 @@
-package com.watent.framework.pointcut;
+package com.watent.framework.aop.pointcut;
 
 import org.aspectj.weaver.tools.PointcutExpression;
 import org.aspectj.weaver.tools.PointcutParser;

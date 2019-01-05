@@ -1,6 +1,6 @@
-package com.watent.framework.advisor;
+package com.watent.framework.aop.advisor;
 
-import com.watent.framework.pointcut.Pointcut;
+import com.watent.framework.aop.pointcut.Pointcut;
 
 /**
  * 切点类型的通知

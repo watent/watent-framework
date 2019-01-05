@@ -1,4 +1,4 @@
-package com.watent.framework.advisor;
+package com.watent.framework.aop.advisor;
 
 import java.util.List;
 

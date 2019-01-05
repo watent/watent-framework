@@ -1,6 +1,6 @@
-package com.watent.framework;
+package com.watent.framework.aop;
 
-import com.watent.framework.advisor.Advisor;
+import com.watent.framework.aop.advisor.Advisor;
 import com.watent.framework.bean.BeanFactory;
 
 import java.util.List;

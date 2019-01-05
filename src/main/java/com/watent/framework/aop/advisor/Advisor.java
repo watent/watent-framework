@@ -1,4 +1,4 @@
-package com.watent.framework.advisor;
+package com.watent.framework.aop.advisor;
 
 /**
  * 切面/通知者 组合通知&切点

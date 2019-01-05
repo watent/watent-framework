@@ -1,4 +1,4 @@
-package com.watent.framework;
+package com.watent.framework.aop;
 
 /**
  * 代理逻辑抽象
